@@ -1,9 +1,5 @@
 
 import './App.css'
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import LandingPage from './pages/LandingPage'
-
 
 
 function App() {
@@ -51,7 +47,7 @@ function App() {
         `}
       </style>
 
-      
+     
 
      
     </>

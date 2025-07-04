@@ -94,12 +94,12 @@ function LandingPage() {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "Personalized Feedback", img: "https://placehold.co/500x350/0a0a0a/FFF?text=Feedback", description: "Receive detailed, constructive feedback on your answers and delivery." },
-              { title: "Performance Analytics", img: "https://placehold.co/500x350/0a0a0a/FFF?text=Analytics", description: "Track your progress with data-driven insights into your strengths and weaknesses." },
-              { title: "Realistic Scenarios", img: "https://placehold.co/500x350/0a0a0a/FFF?text=Scenarios", description: "Practice for specific roles and industries with highly relevant questions." },
-              { title: "Skill-Based Practice", img: "https://placehold.co/500x350/0a0a0a/FFF?text=Skills", description: "Target specific skills with specialized interview modules." },
-              { title: "Anytime, Anywhere", img: "https://placehold.co/500x350/0a0a0a/FFF?text=Flexibility", description: "Hone your interview skills 24/7 from any device." },
-              { title: "Instant Results", img: "https://placehold.co/500x350/0a0a0a/FFF?text=Results", description: "Get immediate insights after each mock interview session." },
+              { title: "Personalized Feedback", img: "https://plus.unsplash.com/premium_photo-1679547202572-bb3a34c54130?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Receive detailed, constructive feedback on your answers and delivery." },
+              { title: "Performance Analytics", img: "https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Track your progress with data-driven insights into your strengths and weaknesses." },
+              { title: "Realistic Scenarios", img: "https://images.unsplash.com/photo-1659353220570-435990a3bd6f?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Practice for specific roles and industries with highly relevant questions." },
+              { title: "Skill-Based Practice", img: "https://plus.unsplash.com/premium_photo-1705883064081-2912134e88ce?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Target specific skills with specialized interview modules." },
+              { title: "Anytime, Anywhere", img: "https://plus.unsplash.com/premium_photo-1663933534195-78b92aac2fa9?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Hone your interview skills 24/7 from any device." },
+              { title: "Instant Results", img: "https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Get immediate insights after each mock interview session." },
             ].map((item, index) => (
               <div key={index} className="relative overflow-hidden rounded-xl shadow-xl group bg-gray-900 p-4 transform transition-all duration-300 hover:scale-105">
                 <img
