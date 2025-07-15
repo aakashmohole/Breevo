@@ -25,7 +25,7 @@ function DashboardHeader() {
         <h1 className="text-2xl md:text-3xl font-bold text-white tracking-wide">Breevo</h1>
         <nav>
           <ul className="flex space-x-6">
-            <li><button onClick={handleLogout} className="text-sm md:text-base text-gray-400 hover:text-white transition duration-300">Logout</button></li>
+            <li><button  className="text-sm md:text-base text-gray-400 hover:text-white transition duration-300">Logout</button></li>
           </ul>
         </nav>
       </div>

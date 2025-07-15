@@ -11,6 +11,8 @@ import { signupUser } from '../api/api';
 function SignUpPage() {
   const navigate = useNavigate()
   
+  
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
@@ -31,13 +33,23 @@ function SignUpPage() {
     } catch (err) {
       toast.warning('Signup failed. Try again.');
       setError(err.message);
+    }finally {
+      setLoading(false); // hide loader
     }
   };
+
+  const signInWithGitHub = () => {
+  toast.info("GitHub signup not yet set up.");
+  }
+
+  const signInWithGoogle = () => {
+    toast.info("Google signup not yet set up.");
+  }
 
   return (
   <BackgroundLines>
     {/* Main container that centers everything */}
-    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center p-4">
+    <div className="mt-8 flex flex-col items-center justify-center p-4">
       {/* Content container with max-width */}
       <div className="flex bg-gray-950 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-800 max-w-4xl w-full overflow-hidden">
         
@@ -111,10 +123,12 @@ function SignUpPage() {
             
             {/* Sign Up Button */}
             <button type='submit'
+              disabled={loading}
               className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-12 px-6 py-3 w-full
                          bg-purple-600 text-white shadow-lg hover:bg-purple-700 transform transition duration-300 hover:scale-105"
             >
               Sign Up
+            {loading ? '...' : ''}
             </button>
             
             {/* Error/Success Messages */}

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'auth_app',     # your custom user app
-    'task_app',     # your pomodoro task app
+    'interviews',
     
     'django.contrib.sites',
     'allauth',
@@ -54,7 +54,9 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'rest_framework_simplejwt.token_blacklist',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    
+    'drf_yasg',
 
 ]
 
@@ -148,9 +150,19 @@ AUTH_USER_MODEL = 'auth_app.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
+        'auth_app.authentication.CookieJWTAuthentication',
+       
     )
 }
+
+REST_AUTH = {
+    'SIGNUP_FIELDS': {
+        'email': {'required': True},
+        'username': {'required': False},  # if you're not using username
+    }
+}
+
 
 from datetime import timedelta
 
@@ -169,7 +181,19 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
+# settings.py
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+]
+
 SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+
 
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
@@ -191,6 +215,7 @@ REST_USE_JWT = True
 DJREST_AUTH_TOKEN_MODEL = None
 AUTHENTICATION_METHOD = "email"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']  # use * to mark required fields
+ACCOUNT_LOGIN_METHODS = {'email'}  # for login using email only
+

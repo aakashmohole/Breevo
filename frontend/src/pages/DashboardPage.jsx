@@ -7,13 +7,12 @@ import PastInterviewsList from '../components/Dashboard/Sections/PastInterviewsL
 import InterviewDetail from '../components/Dashboard/Sections/InterviewDetail';
 import PracticeModesSection from '../components/Dashboard/Sections/PracticeModesSection';
 import SettingsSection from '../components/Dashboard/Sections/SettingsSection';
-
-
+import Dashboard from '../components/Dashboard/Sections/Dashboard';
 
 function DashboardPage() {
 
   
-  const [activeSection, setActiveSection] = useState('new-interview');
+  const [activeSection, setActiveSection] = useState('dashboard');
   const [selectedInterviewId, setSelectedInterviewId] = useState(null);
 
   // Form state
@@ -108,7 +107,7 @@ function DashboardPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-white font-inter">
-      <DashboardHeader  />
+      
 
       <div className="flex flex-1 pt-16">
         <DashboardSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
@@ -116,6 +115,16 @@ function DashboardPage() {
         <main className="flex-1 p-8 ml-64 overflow-y-auto relative">
           <div className="animated-gradient-bg"></div>
           <div className="absolute inset-0 bg-black opacity-40 z-0"></div>
+
+          {activeSection === 'dashboard' && (
+            <Dashboard
+              // recentInterviews={recentInterviews}
+              onSelectInterview={(id) => { 
+                setActiveSection('new-interview'); 
+                // setSelectedInterviewId(id); 
+              }}
+            />
+          )}    
 
           {activeSection === 'new-interview' && (
             <NewInterviewForm

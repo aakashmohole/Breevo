@@ -7,6 +7,7 @@ const API = axios.create({
   withCredentials: true, // ⬅️ this is IMPORTANT to send cookies
 });
 
+
 // Signup API
 export const signupUser = (data) => API.post('register/', data);
 
@@ -16,5 +17,20 @@ export const loginUser = (data) => API.post('/login/', data);
 // Example: Get user profile (protected)
 export const getUserProfile = () => API.get('/profile/');
 
+// Create interview
+// export const createInterview = (data) => API.post('interviews/create/', data,{ withCredentials: true,});
+
+export const createInterview = (data) => API.post('interviews/create/', data, {
+  headers: {
+    'Content-Type': 'application/json',
+    // Add other required headers here
+  },
+  withCredentials: true
+});
+
+// Generate questions
+export const generateInterviewQuestions = (interviewId) => API.post(`interviews/${interviewId}/generate-questions/`);
 
 export const logoutUser = () => API.post('logout/');
+
+

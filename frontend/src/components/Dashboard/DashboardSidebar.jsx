@@ -5,9 +5,24 @@ function DashboardSidebar({ activeSection, setActiveSection }) {
     <aside className="w-64 bg-gray-950 border-r border-gray-800 p-6 flex flex-col items-start space-y-4 fixed h-full top-16 left-0 z-40 overflow-y-auto">
       <h2 className="text-xl font-bold text-white mb-4">Navigation</h2>
       <button
+        onClick={() => setActiveSection('dashboard')}
+        className={`w-full text-left py-2 px-4 rounded-lg transition duration-300 flex items-center space-x-2
+          ${activeSection === 'dashboard' ? 'bg-purple-700 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layout-dashboard">
+          <rect x="3" y="3" width="7" height="9" />
+          <rect x="14" y="3" width="7" height="5" />
+          <rect x="14" y="12" width="7" height="9" />
+          <rect x="3" y="16" width="7" height="5" />
+        </svg>
+
+        <span>Dashboard</span>
+      </button>
+
+      <button
         onClick={() => setActiveSection('new-interview')}
         className={`w-full text-left py-2 px-4 rounded-lg transition duration-300 flex items-center space-x-2
-          ${activeSection === 'new-interview' ? 'bg-purple-700 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
+          ${activeSection === 'new-interview' || activeSection === 'interview-detail' ? 'bg-purple-700 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus-circle"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
         <span>New Interview</span>
