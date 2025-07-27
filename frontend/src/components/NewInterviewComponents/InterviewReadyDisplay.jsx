@@ -1,6 +1,19 @@
 import React from 'react';
+import { useState } from 'react';
+import PracticeModesSection from '../Dashboard/Sections/PracticeModesSection';
+import {useNavigate} from 'react-router-dom';
 
-export default function InterviewReadyDisplay({ onStartInterview, onBackToForm }) {
+export default function InterviewReadyDisplay() {
+
+ const [showPractice, setShowPractice] = useState(false);
+
+  const handleStartPractice = () => {
+    setShowPractice(true);
+  };
+
+  if (showPractice) {
+    return <PracticeModesSection />;
+  }
   return (
     <>
       {/* CSS for the SVG animations */}
@@ -78,7 +91,7 @@ export default function InterviewReadyDisplay({ onStartInterview, onBackToForm }
           {/* Subtitle/Description: Provides clear context to the user. */}
           {/* Uses a slightly larger text size and relaxed line height for readability. */}
           <p className="text-gray-300 mb-9 text-lg leading-relaxed">
-            Your personalized interview questions have been successfully generated. Let's begin your practice session!
+            Your personalized interview questions have been successfully generated. Let's begin your practice session in Live Interviews Tab!
           </p>
 
           {/* Action Buttons: Grouped for better layout and user interaction. */}
@@ -86,7 +99,7 @@ export default function InterviewReadyDisplay({ onStartInterview, onBackToForm }
             {/* Primary Call to Action Button: "Start Practice Interview" */}
             {/* Styled with a subtle blue/gray gradient, larger size, and a refined hover effect. */}
             <button
-              onClick={onStartInterview}
+              onClick={handleStartPractice}
               className="inline-flex items-center justify-center rounded-full text-xl font-semibold h-16 px-8 bg-gradient-to-r from-blue-500 to-gray-600 text-white shadow-lg hover:from-blue-600 hover:to-gray-700 transform transition duration-300 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             >
               {/* Play icon for visual cue */}
@@ -99,12 +112,7 @@ export default function InterviewReadyDisplay({ onStartInterview, onBackToForm }
 
             {/* Secondary Action Button: "Go back to make changes" */}
             {/* Styled subtly to not overshadow the primary button, with a clear hover state. */}
-            <button
-              onClick={onBackToForm}
-              className="text-gray-400 hover:text-gray-200 transition duration-300 text-base font-medium"
-            >
-              Go back to make changes
-            </button>
+            
           </div>
         </div>
       </div>

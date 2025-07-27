@@ -34,3 +34,23 @@ export const generateInterviewQuestions = (interviewId) => API.post(`interviews/
 export const logoutUser = () => API.post('logout/');
 
 
+// Fetch all incomplete interviews for the logged-in user
+export const getIncompleteInterviews = () => 
+  API.get('interviews/incomplete-interview/');
+
+
+export const getAllInterviews = () => 
+  API.get('interviews/all-interviews/');
+
+
+// Update interview status (e.g., mark as completed)
+// payload can be { is_completed: true } or false etc.
+export const updateInterviewStatus = (interviewId, payload) => 
+  API.patch(`interviews/update-interview/${interviewId}/`, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+export const getIncompleteInterviewById = (interviewId) =>
+  API.get(`interviews/incomplete-interview/${interviewId}/`);

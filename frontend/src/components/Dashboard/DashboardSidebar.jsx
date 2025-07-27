@@ -29,6 +29,15 @@ function DashboardSidebar({ activeSection, setActiveSection }) {
       </button>
 
       <button
+        onClick={() => setActiveSection('practice-modes')}
+        className={`w-full text-left py-2 px-4 rounded-lg transition duration-300 flex items-center space-x-2
+          ${activeSection === 'practice-modes' ? 'bg-purple-700 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-dumbbell"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m7.5 7.5 9 9"/><path d="m16.5 8.5 4 4"/><path d="m3.5 15.5 4 4"/></svg>
+        <span>Live Now</span>
+      </button>
+
+      <button
         onClick={() => setActiveSection('my-interviews-list')}
         className={`w-full text-left py-2 px-4 rounded-lg transition duration-300 flex items-center space-x-2
           ${activeSection === 'my-interviews-list' || activeSection === 'interview-detail' ? 'bg-purple-700 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
@@ -37,14 +46,7 @@ function DashboardSidebar({ activeSection, setActiveSection }) {
         <span>Past Interviews</span>
       </button>
 
-      <button
-        onClick={() => setActiveSection('practice-modes')}
-        className={`w-full text-left py-2 px-4 rounded-lg transition duration-300 flex items-center space-x-2
-          ${activeSection === 'practice-modes' ? 'bg-purple-700 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-dumbbell"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m7.5 7.5 9 9"/><path d="m16.5 8.5 4 4"/><path d="m3.5 15.5 4 4"/></svg>
-        <span>Practice Modes</span>
-      </button>
+      
 
       <button
         onClick={() => setActiveSection('settings')}

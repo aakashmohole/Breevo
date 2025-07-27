@@ -71,7 +71,7 @@ const handleGenerateInterview = async () => {
 
     // 3. Show ready screen
     setActiveSection('ready');
-    toast.success('Login successful!', {
+    toast.success('Interview Created successful!', {
       style: {
         background: '#1e293b', // dark blue
         color: '#fff',
@@ -91,7 +91,6 @@ const handleGenerateInterview = async () => {
   }
 };
 
-
   // Function to go back to the form
   const handleBackToForm = () => {
     setActiveSection('form');
@@ -99,7 +98,6 @@ const handleGenerateInterview = async () => {
 
   // Function to handle starting the interview
   const handleStartInterview = () => {
-    // In a real app, this would navigate to the actual interview page
     // For now, just go back to the form
     handleBackToForm();
   };
@@ -171,6 +169,7 @@ const handleGenerateInterview = async () => {
           onBackToForm={handleBackToForm}
         />
       )}
+
     </div>
   );
 }

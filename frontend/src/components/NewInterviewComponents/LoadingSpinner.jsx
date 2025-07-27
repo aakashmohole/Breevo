@@ -17,7 +17,7 @@ export default function LoadingSpinner() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-white p-4">
       {/* MultiStepLoader core */}
-      <MultiStepLoader loadingStates={loadingStates} loading={true} duration={5000} />
+      <MultiStepLoader loadingStates={loadingStates} loading={true} duration={3000} />
       
       {/* Spinner design */}
       <div className="relative flex items-center justify-center mt-16">

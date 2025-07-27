@@ -8,13 +8,12 @@ import PublicRoute from './components/ProtectedRouts/PublicRoute.jsx';
 
 import App from './App.jsx'
 import Layout from './Layout.jsx'
-import Footer from './components/Footer/Footer.jsx'
-import Header from './components/Header/Header.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx';
-
+import PracticeInterview from './components/Dashboard/Sections/PastInterviewsList.jsx';
+import InterviewReadyDisplay from './components/NewInterviewComponents/InterviewReadyDisplay.jsx';
 
 
 const router = createBrowserRouter(
@@ -39,6 +38,8 @@ const router = createBrowserRouter(
           <DashboardPage />
         </ProtectedRoute>
       }/>
+
+      <Route path="/liveInterview" element={<PracticeInterview />} />
     </Route>
   )
 )

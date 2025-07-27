@@ -17,6 +17,7 @@ class Interview(models.Model):
     
     
     generated_questions = models.JSONField(null=True, blank=True)
+    is_completed = models.BooleanField(default=False)  # New field
     
     def __str__(self):
         return f"{self.job_role} Interview for {self.user.email}"

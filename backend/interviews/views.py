@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, permissions
 from .models import Interview, InterviewQuestion
 from .serializers import InterviewSerializer, InterviewQuestionSerializer
-
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView ,RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -49,7 +49,7 @@ class GenerateQuestionsView(APIView):
                 "temperature": 0.7
             }
         )
-
+        print(response.status_code, response)  # Debugging line to check API response
         if response.status_code != 200:
             return Response({"error": "Failed to generate questions"}, status=500)
 
@@ -77,3 +77,35 @@ class GenerateQuestionsView(APIView):
             "message": "Questions saved in both Interview and InterviewQuestion table.",
             "questions": formatted_questions
         }, status=200)
+
+
+class UserAllInterviewsView(ListAPIView):
+    serializer_class = InterviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Interview.objects.filter(user=self.request.user)
+    
+class IncompleteInterviewsView(ListAPIView):
+    serializer_class = InterviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Interview.objects.filter(user=self.request.user, is_completed=False)
+    
+class InterviewUpdateView(RetrieveUpdateAPIView):
+    queryset = Interview.objects.all()
+    serializer_class = InterviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Limit to interviews owned by logged-in user, for security
+        return Interview.objects.filter(user=self.request.user)
+    
+class IncompleteInterviewDetailView(RetrieveAPIView):
+    serializer_class = InterviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Only incomplete interviews for the logged in user
+        return Interview.objects.filter(user=self.request.user, is_completed=False)

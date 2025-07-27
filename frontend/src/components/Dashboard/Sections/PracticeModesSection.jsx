@@ -1,72 +1,104 @@
-import React from 'react';
-import { showCustomAlert } from '../../../utils/showCustomAlert';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-function PracticeModesSection() {
+import InterviewList from '../InterviewComp/InterviewList';
+import InterviewCallScreen from '../InterviewComp/InterviewCallScreen';
+import { getIncompleteInterviews, getIncompleteInterviewById, updateInterviewStatus } from '../../../api/api';
+
+const PracticeModesSection = () => {
+  const [savedInterviews, setSavedInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentView, setCurrentView] = useState('list'); // 'list' or 'interview'
+  const [selectedInterview, setSelectedInterview] = useState(null);
+
+  // Fetch incomplete interviews on mount
+  useEffect(() => {
+    async function fetchInterviews() {
+      try {
+        setLoading(true);
+        const res = await getIncompleteInterviews();
+        setSavedInterviews(res.data); // assuming res.data is array of interviews
+      } catch (error) {
+        toast.error('Failed to fetch incomplete interviews.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchInterviews();
+  }, []);
+
+  // Handler when user clicks Join on a specific interview card
+ const handleJoinInterview = async (interviewId) => {
+    try {
+      const res = await getIncompleteInterviewById(interviewId);
+      setSelectedInterview(res.data); // Set detailed interview data
+      setCurrentView('interview');    // Switch to InterviewCallScreen
+    } catch (err) {
+      toast.error('Failed to load interview details.');
+    }
+  };
+
+  // Handler for deleting interview locally (you may also want to call backend API)
+  const handleDeleteInterview = (interviewId) => {
+    setSavedInterviews(prev => prev.filter(interview => interview.id !== interviewId));
+    toast.success('Interview deleted successfully!');
+  };
+
+  // Ending the interview call — switch back to list
+  const handleEndCall = () => {
+    setCurrentView('list');
+    setSelectedInterview(null);
+    toast.info('Interview call ended.');
+  };
+
+  // Mark as done — update backend and remove from list
+  const handleMarkAsDone = async () => {
+    if (!selectedInterview) return;
+    try {
+      await updateInterviewStatus(selectedInterview.id, { is_completed: true });
+      setSavedInterviews(prev => prev.filter(i => i.id !== selectedInterview.id));
+      toast.success(`Interview for ${selectedInterview.job_role} marked as done!`);
+      setCurrentView('list');
+      setSelectedInterview(null);
+    } catch {
+      toast.error('Error updating interview status.');
+    }
+  };
+
+  if (loading) {
+    return <div className="text-white text-center mt-20">Loading interviews...</div>;
+  }
+
   return (
-    <div className="relative z-10 bg-gray-950 bg-opacity-90 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-gray-800 max-w-3xl w-full mx-auto text-left animate-fade-in-down">
-      <h2 className="text-3xl font-bold text-white mb-6">Targeted Practice Modes</h2>
-      <p className="text-gray-300 mb-6">
-        Hone specific skills with focused practice sessions.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div 
-          className="p-6 bg-gray-800 rounded-xl border border-gray-700 flex flex-col items-start space-y-3 transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-          onClick={() => showCustomAlert('Starting Behavioral Question Practice!', 'info')}
-        >
-          <h3 className="text-xl font-semibold text-white">Behavioral Questions</h3>
-          <p className="text-gray-400 text-sm">Practice common "tell me about a time when..." questions.</p>
-          <button 
-            onClick={(e) => { e.stopPropagation(); showCustomAlert('Starting Behavioral Practice', 'info'); }} 
-            className="mt-2 bg-purple-600 text-white px-4 py-2 rounded-full text-sm hover:bg-purple-700 transition duration-300"
-          >
-            Start Practice
-          </button>
-        </div>
-        
-        <div 
-          className="p-6 bg-gray-800 rounded-xl border border-gray-700 flex flex-col items-start space-y-3 transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-          onClick={() => showCustomAlert('Starting Technical Coding Practice!', 'info')}
-        >
-          <h3 className="text-xl font-semibold text-white">Technical Coding Challenges</h3>
-          <p className="text-gray-400 text-sm">Sharpen your coding skills with timed challenges.</p>
-          <button 
-            onClick={(e) => { e.stopPropagation(); showCustomAlert('Starting Technical Practice', 'info'); }} 
-            className="mt-2 bg-purple-600 text-white px-4 py-2 rounded-full text-sm hover:bg-purple-700 transition duration-300"
-          >
-            Start Practice
-          </button>
-        </div>
+    <>
+      {currentView === 'list' && (
+        <main className="relative z-10 bg-gray-950 bg-opacity-90 backdrop-blur-md p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl shadow-2xl border border-gray-800 max-w-6xl w-full mx-auto text-left font-sans">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-6 sm:mb-8 border-b border-gray-700 pb-4">Live Interviews</h1>
 
-        <div 
-          className="p-6 bg-gray-800 rounded-xl border border-gray-700 flex flex-col items-start space-y-3 transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-          onClick={() => showCustomAlert('Starting System Design Practice!', 'info')}
-        >
-          <h3 className="text-xl font-semibold text-white">System Design Scenarios</h3>
-          <p className="text-gray-400 text-sm">Practice designing scalable systems.</p>
-          <button 
-            onClick={(e) => { e.stopPropagation(); showCustomAlert('Starting System Design Practice', 'info'); }} 
-            className="mt-2 bg-purple-600 text-white px-4 py-2 rounded-full text-sm hover:bg-purple-700 transition duration-300"
-          >
-            Start Practice
-          </button>
-        </div>
+          <section className="mb-8">
+            <h2 className="text-xl sm:text-2xl font-semibold text-white mb-6">Your Scheduled Interviews</h2>
+            {savedInterviews.length > 0 ? (
+              <InterviewList
+                interviews={savedInterviews}
+                onJoin={handleJoinInterview}
+                onDelete={handleDeleteInterview}
+              />
+            ) : (
+              <p className="text-gray-400">You don't have any interviews scheduled yet.</p>
+            )}
+          </section>
+        </main>
+      )}
 
-        <div 
-          className="p-6 bg-gray-800 rounded-xl border border-gray-700 flex flex-col items-start space-y-3 transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-          onClick={() => showCustomAlert('Exploring Question Bank!', 'info')}
-        >
-          <h3 className="text-xl font-semibold text-white">Question Bank</h3>
-          <p className="text-gray-400 text-sm">Browse and practice individual questions.</p>
-          <button 
-            onClick={(e) => { e.stopPropagation(); showCustomAlert('Opening Question Bank', 'info'); }} 
-            className="mt-2 bg-purple-600 text-white px-4 py-2 rounded-full text-sm hover:bg-purple-700 transition duration-300"
-          >
-            Explore
-          </button>
-        </div>
-      </div>
-    </div>
+      {currentView === 'interview' && selectedInterview && (
+        <InterviewCallScreen
+          interview={selectedInterview}
+          onEndCall={handleEndCall}
+          onMarkAsDone={handleMarkAsDone}
+        />
+      )}
+    </>
   );
-}
+};
 
 export default PracticeModesSection;
