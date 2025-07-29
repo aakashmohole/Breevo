@@ -167,7 +167,7 @@ REST_AUTH = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -219,3 +219,12 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']  # use * to mark required fields
 ACCOUNT_LOGIN_METHODS = {'email'}  # for login using email only
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # Adjust host/port/db as needed
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}

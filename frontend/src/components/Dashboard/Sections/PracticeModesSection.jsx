@@ -1,48 +1,78 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
+import InterviewDetailsModal from '../InterviewComp/InterviewDetailsModal';
 import InterviewList from '../InterviewComp/InterviewList';
 import InterviewCallScreen from '../InterviewComp/InterviewCallScreen';
-import { getIncompleteInterviews, getIncompleteInterviewById, updateInterviewStatus } from '../../../api/api';
 
+import { getIncompleteInterviews, getIncompleteInterviewById, updateInterviewStatus, 
+  deleteIncompleteInterviewById} from '../../../api/api';
+
+
+import { LoaderOne } from '../../ui/loadingCircle';
 const PracticeModesSection = () => {
   const [savedInterviews, setSavedInterviews] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [showInterviewModal, setShowInterviewModal] = useState(false);
   const [currentView, setCurrentView] = useState('list'); // 'list' or 'interview'
   const [selectedInterview, setSelectedInterview] = useState(null);
-
+  
   // Fetch incomplete interviews on mount
   useEffect(() => {
-    async function fetchInterviews() {
-      try {
-        setLoading(true);
-        const res = await getIncompleteInterviews();
-        setSavedInterviews(res.data); // assuming res.data is array of interviews
-      } catch (error) {
-        toast.error('Failed to fetch incomplete interviews.');
-      } finally {
-        setLoading(false);
+    const cached = localStorage.getItem('incomplete_interviews');
+    if (cached) {
+      setSavedInterviews(JSON.parse(cached));
+      setLoading(false);
+    } else {
+      async function fetchInterviews() {
+        try {
+          setLoading(true);
+          const res = await getIncompleteInterviews();
+          setSavedInterviews(res.data);
+          localStorage.setItem('incomplete_interviews', JSON.stringify(res.data));
+        } catch (error) {
+          toast.error('Failed to fetch incomplete interviews.');
+        } finally {
+          setLoading(false);
+        }
       }
+      fetchInterviews();
     }
-    fetchInterviews();
   }, []);
 
   // Handler when user clicks Join on a specific interview card
- const handleJoinInterview = async (interviewId) => {
+const handleJoinInterview = async (interviewId) => {
+  try {
+    const res = await getIncompleteInterviewById(interviewId);
+    setSelectedInterview(res.data);
+    setShowInterviewModal(true);
+  } catch (error) {
+    toast.error('Could not load interview details.');
+  }
+};
+
+
+  // Handler for deleting interview locally (you may also want to call backend API)
+  const handleDeleteInterview = async (interviewId) => {
     try {
-      const res = await getIncompleteInterviewById(interviewId);
-      setSelectedInterview(res.data); // Set detailed interview data
-      setCurrentView('interview');    // Switch to InterviewCallScreen
-    } catch (err) {
-      toast.error('Failed to load interview details.');
+      // Call backend API to delete the interview
+      await deleteIncompleteInterviewById(interviewId);
+
+      // If successful, update local state and localStorage
+      setSavedInterviews(prev => {
+        const updated = prev.filter(interview => interview.id !== interviewId);
+        localStorage.setItem('incomplete_interviews', JSON.stringify(updated));
+        return updated;
+      });
+
+      toast.success('Interview deleted successfully!');
+    } catch (error) {
+      toast.error('Failed to delete interview. Please try again.');
+      console.error('Delete interview error:', error);
     }
   };
 
-  // Handler for deleting interview locally (you may also want to call backend API)
-  const handleDeleteInterview = (interviewId) => {
-    setSavedInterviews(prev => prev.filter(interview => interview.id !== interviewId));
-    toast.success('Interview deleted successfully!');
-  };
+
 
   // Ending the interview call — switch back to list
   const handleEndCall = () => {
@@ -66,8 +96,13 @@ const PracticeModesSection = () => {
   };
 
   if (loading) {
-    return <div className="text-white text-center mt-20">Loading interviews...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <LoaderOne />
+      </div>
+    );
   }
+
 
   return (
     <>
@@ -90,10 +125,22 @@ const PracticeModesSection = () => {
         </main>
       )}
 
+      {showInterviewModal && (
+        <InterviewDetailsModal
+          interview={selectedInterview}
+          onClose={() => setShowInterviewModal(false)}
+          onStartCall={() => {
+            setShowInterviewModal(false);
+            setCurrentView('interview');
+          }}
+        />
+      )}
+
       {currentView === 'interview' && selectedInterview && (
         <InterviewCallScreen
           interview={selectedInterview}
           onEndCall={handleEndCall}
+          
           onMarkAsDone={handleMarkAsDone}
         />
       )}

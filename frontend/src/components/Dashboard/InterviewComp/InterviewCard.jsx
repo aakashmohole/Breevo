@@ -1,7 +1,23 @@
 import { motion } from "framer-motion";
 import DifficultyTag from "../../BasicComponents/DifficultyTag";
 
+const fallbackImages = [
+  "https://images.unsplash.com/photo-1529232356377-57971f020a94?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1613473350016-1fe047d6d360?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1526413232644-8a40f03cc03b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1554727242-741c14fa561c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+];
+
+const getRandomImage = () => {
+  return fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+};
+
+
 const InterviewCard = ({ interview, onJoin, onDelete }) => (
+
+  
   <motion.article
     
     transition={{ type: "spring", stiffness: 220, damping: 18 }}
@@ -29,14 +45,18 @@ const InterviewCard = ({ interview, onJoin, onDelete }) => (
     <div className="p-8 flex flex-col items-center text-center space-y-3">
       {/* Interviewer */}
       <motion.img
-        src={interview.interviewer}
+        src={getRandomImage()} // 👈 use random fallback
         alt="Interviewer"
-        onError={e => { e.target.onerror = null; e.target.src = "https://placehold.co/64x64/5B21B6/FFFFFF?text=HR"; }}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = getRandomImage(); // 👈 use random fallback
+        }}
         className="w-20 h-20 rounded-full object-cover border-4 border-purple-500 shadow-lg group-hover:border-purple-400 transition"
         layout="fixed"
         initial={{ scale: 0.95, boxShadow: "0 2px 12px #a78bfa90" }}
         whileHover={{ scale: 1.05, boxShadow: "0 6px 32px #a78bfa90" }}
       />
+
       {/* Title */}
       <h3 className="text-2xl font-bold text-white tracking-tight drop-shadow">{interview.job_role}</h3>
       <p className="text-purple-400 text-base font-medium">{interview.industry}</p>

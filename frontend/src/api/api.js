@@ -54,3 +54,6 @@ export const updateInterviewStatus = (interviewId, payload) =>
 
 export const getIncompleteInterviewById = (interviewId) =>
   API.get(`interviews/incomplete-interview/${interviewId}/`);
+
+export const deleteIncompleteInterviewById = (interviewId) =>
+  API.delete(`interviews/incomplete-interview/${interviewId}/delete/`);
