@@ -42,8 +42,10 @@ function LandingPage() {
             <p className="text-lg text-gray-300 mb-8">
               Tell our AI about your dream job. Specify the role, industry, required skills, and even company culture. The more details you provide, the more precise your mock interview will be.
             </p>
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-md font-semibold h-12 px-6 py-3
+            <button onClick={() => navigate('/signup')}
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-md font-semibold h-12 px-6 py-3
                                bg-purple-600 text-white shadow-lg hover:bg-purple-700 transition-all duration-300 ease-in-out">
+                                
               Set Up Your Interview
             </button>
           </div>
@@ -78,7 +80,8 @@ function LandingPage() {
             <p className="text-lg text-gray-300 mb-8">
               Our advanced AI generates realistic interview questions based on your specifications. Engage in a live, interactive mock interview tailored to your exact needs, simulating a real-world scenario.
             </p>
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-md font-semibold h-12 px-6 py-3
+            <button onClick={() => navigate('/signup')}
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-md font-semibold h-12 px-6 py-3
                                bg-purple-600 text-white shadow-lg hover:bg-purple-700 transition-all duration-300 ease-in-out">
               Begin Practice
             </button>
@@ -125,7 +128,8 @@ function LandingPage() {
           <p className="text-lg text-gray-300 mb-10">
             Sign up now and start practicing with your personalized AI interviewer.
           </p>
-          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-lg font-semibold h-14 px-8 py-3
+          <button onClick={() => navigate('/signup')}
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-lg font-semibold h-14 px-8 py-3
                              bg-white text-black shadow-lg hover:bg-gray-200 transition-all duration-300 ease-in-out transform hover:scale-105">
             Get Started Free
           </button>

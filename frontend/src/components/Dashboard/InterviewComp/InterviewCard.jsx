@@ -17,7 +17,6 @@ const getRandomImage = () => {
 
 const InterviewCard = ({ interview, onJoin, onDelete }) => (
 
-  
   <motion.article
     
     transition={{ type: "spring", stiffness: 220, damping: 18 }}
@@ -99,3 +98,4 @@ const InterviewCard = ({ interview, onJoin, onDelete }) => (
 );
 
 export default InterviewCard;
+

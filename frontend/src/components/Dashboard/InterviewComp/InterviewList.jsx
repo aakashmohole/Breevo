@@ -16,3 +16,4 @@ const InterviewList = ({ interviews, onJoin, onDelete }) => {
 };
 
 export default InterviewList;
+

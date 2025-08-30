@@ -4,11 +4,15 @@ import PracticeModesSection from '../Dashboard/Sections/PracticeModesSection';
 import {useNavigate} from 'react-router-dom';
 
 export default function InterviewReadyDisplay() {
-
- const [showPractice, setShowPractice] = useState(false);
+  const navigate = useNavigate();
+  const [showPractice, setShowPractice] = useState(false);
 
   const handleStartPractice = () => {
     setShowPractice(true);
+  };
+
+  const handleNewInterview = () => {
+    navigate(-1); // go back one step
   };
 
   if (showPractice) {
@@ -84,7 +88,7 @@ export default function InterviewReadyDisplay() {
 
           {/* Heading: Prominent and engaging title. */}
           {/* Uses a larger font size and a refined, cooler gradient for a modern, clean aesthetic. */}
-          <h2 className="text-5xl font-extrabold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-blue-300">
+          <h2 className="text-5xl font-extrabold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-purple-700">
             You're All Set!
           </h2>
 
@@ -100,14 +104,14 @@ export default function InterviewReadyDisplay() {
             {/* Styled with a subtle blue/gray gradient, larger size, and a refined hover effect. */}
             <button
               onClick={handleStartPractice}
-              className="inline-flex items-center justify-center rounded-full text-xl font-semibold h-16 px-8 bg-gradient-to-r from-blue-500 to-gray-600 text-white shadow-lg hover:from-blue-600 hover:to-gray-700 transform transition duration-300 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+              className="inline-flex items-center justify-center rounded-full text-xl font-semibold h-16 px-8 bg-gradient-to-r from-purple-500 to-gray-600 text-white shadow-lg hover:from-green-600 hover:to-gray-700 transform transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             >
               {/* Play icon for visual cue */}
-              <svg className="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <svg className="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M12.707 15.707a1 1 0 01-1.414 0L6.586 11l4.707-4.707a1 1 0 011.414 1.414L9.414 11l3.293 3.293a1 1 0 010 1.414z" clipRule="evenodd" />
               </svg>
-              Start Practice Interview
+
+              Create New Interview
             </button>
 
             {/* Secondary Action Button: "Go back to make changes" */}

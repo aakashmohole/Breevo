@@ -37,7 +37,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('auth_app.urls')),
     path('api/interviews/', include('interviews.urls')),
-    
+    path("api/vapi/", include("vapi.urls")),
+
     
     
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

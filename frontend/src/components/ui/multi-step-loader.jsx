@@ -60,13 +60,13 @@ const LoaderCore = ({
               {index <= value && (
                 <CheckFilled
                   className={multisteploader("text-black dark:text-white", value === index &&
-                    "text-black dark:text-lime-500 opacity-100")} />
+                    "text-black dark:text-purple-500 opacity-100")} />
               )}
             </div>
             <span
               className={multisteploader(
                 "text-black dark:text-white",
-                value === index && "text-black dark:text-lime-500 opacity-100"
+                value === index && "text-black dark:text-purple-500 opacity-100"
               )}>
               {loadingState.text}
             </span>

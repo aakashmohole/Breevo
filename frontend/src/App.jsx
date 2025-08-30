@@ -47,9 +47,6 @@ function App() {
         `}
       </style>
 
-     
-
-     
     </>
   )
 }

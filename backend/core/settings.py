@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'auth_app',     # your custom user app
     'interviews',
+    'vapi',
     
     'django.contrib.sites',
     'allauth',
@@ -222,9 +223,13 @@ ACCOUNT_LOGIN_METHODS = {'email'}  # for login using email only
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",  # Adjust host/port/db as needed
+        # "LOCATION": "redis://127.0.0.1:6379/1",  # Adjust host/port/db as needed
+        "LOCATION": config("REDIS_URL"),
         "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",  
         }
     }
 }
+
+
+VAPI_API_KEY = config("VAPI_API_KEY")  # from .env

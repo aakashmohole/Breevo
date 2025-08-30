@@ -7,9 +7,9 @@ export default function LoadingSpinner() {
     { text: "Reading your inputs" },
     { text: "Reformatting for OpenRouter" },
     { text: "Sending to OpenRouter" },
-    { text: "OpenRouter sending to ChatGPT" },
-    { text: "OpenRouter sending to Deepseek" },
-    { text: "OpenRouter sending to LLaMA3" },
+    // { text: "OpenRouter sending to ChatGPT" },
+    // { text: "OpenRouter sending to Deepseek" },
+    // { text: "OpenRouter sending to LLaMA3" },
     { text: "Generating questions" },
     { text: "Finalizing interview" },
   ];

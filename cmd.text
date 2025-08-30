@@ -1,0 +1,5 @@
+docker run --name django-redis -d -p 6379:6379 redis redis-server --appendonly yes
+
+
+{'id': '52a295cc-9fcb-4ae3-a884-069f4676ff01', 'orgId': '204dc68e-7fdf-42bb-b8c1-c2dd312459ec', 'name': 'Interview Assistant', 'voice': {'voiceId': '21m00Tcm4TlvDq8ikWAM', 'provider': '11labs'}, 'createdAt': '2025-08-16T16:42:08.078Z', 'updatedAt': '2025-08-16T16:42:08.078Z', 'model': {'model': 'gpt-4o', 'messages': [{'role': 'system', 'content': '\nYou are an interview assistant.\nYou will ask the candidate the questions provided in the metadata field "questions".\n\nRules:\n1. Ask one question at a time in order.\n2. After the candidate answers, move to the next question.\n3. Be polite and concise.\n4. When all questions are done, thank the candidate and end the call.\n            
+'}], 'provider': 'openai', 'temperature': 0.7}, 'firstMessage': "Hi! Let's start your interview. I’ll ask one question at a time.", 'isServerUrlSecretSet': False}

@@ -14,7 +14,7 @@ function Layout() {
       <Header />
       <ToastContainer position="top-right" autoClose={5000} theme="dark"/>
       <Outlet />
-      <Footer />
+
    </>
   )
 

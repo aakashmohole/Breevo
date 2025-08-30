@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (CreateInterviewView, GenerateQuestionsView,
                     IncompleteInterviewsView,UserAllInterviewsView,
                     InterviewUpdateView, IncompleteInterviewDetailView, 
-                    IncompleteInterviewDeleteView)
+                    IncompleteInterviewDeleteView,CompletedInterviewsView,
+                    CompletedInterviewDetailView)
 
 urlpatterns = [
     path('create/', CreateInterviewView.as_view(), name='create-interview'),
@@ -12,4 +13,6 @@ urlpatterns = [
     path('incomplete-interview/<int:pk>/delete/', IncompleteInterviewDeleteView.as_view(), name='incomplete-interview-delete'),
     path('all-interviews/', UserAllInterviewsView.as_view(), name='user-all-interviews'),
     path('update-interview/<int:pk>/', InterviewUpdateView.as_view(), name='interview-update'),
+    path('completed/', CompletedInterviewsView.as_view(), name='completed-interviews'),
+    path('completed/<int:pk>/', CompletedInterviewDetailView.as_view(), name='completed-interview-detail'),
 ]

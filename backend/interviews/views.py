@@ -89,8 +89,6 @@ class UserAllInterviewsView(ListAPIView):
     serializer_class = InterviewSerializer
     permission_classes = [IsAuthenticated]
 
-    # def get_queryset(self):
-    #     return Interview.objects.filter(user=self.request.user)
     def list(self, request, *args, **kwargs):
         user_id = request.user.id
         cache_key = f"user_interviews_{user_id}"
@@ -119,9 +117,9 @@ class IncompleteInterviewsView(ListAPIView):
         user_id = request.user.id
         cache_key = f"user_incomplete_interviews_{user_id}"
         cached_data = cache.get(cache_key)
-        print("Cache hit!", cache_key)
+        
         if cached_data:
-            print("Cache hit!")
+            print("Cache hit!", cache_key)
             return Response(cached_data)
 
         queryset = self.get_queryset()
@@ -160,9 +158,9 @@ class IncompleteInterviewDetailView(RetrieveAPIView):
         interview_id = self.kwargs['pk']
         cache_key = f"incomplete_interview_detail_{interview_id}"
         cached_data = cache.get(cache_key)
-        print("Cache hit!", cache_key)
+       
         if cached_data:
-            print("Cache hit!")
+            print("Cache hit!", cache_key)
             return Response(cached_data)
 
         # If not in cache, get from DB and cache it
@@ -195,3 +193,49 @@ class IncompleteInterviewDeleteView(DestroyAPIView):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response({"detail": "Incomplete interview deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+
+
+class CompletedInterviewsView(ListAPIView):
+    serializer_class = InterviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        user_id = request.user.id
+        cache_key = f"user_completed_interviews_{user_id}"
+        cached_data = cache.get(cache_key)
+
+        if cached_data:
+            return Response(cached_data)
+
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        data = serializer.data
+       
+        cache.set(cache_key, data, timeout=300)  # 5 mins
+        return Response(data)
+
+    def get_queryset(self):
+        return Interview.objects.filter(user=self.request.user, is_completed=True)
+
+
+class CompletedInterviewDetailView(RetrieveAPIView):
+    serializer_class = InterviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Interview.objects.filter(user=self.request.user, is_completed=True)
+
+    def retrieve(self, request, *args, **kwargs):
+        interview_id = self.kwargs['pk']
+        cache_key = f"completed_interview_detail_{interview_id}"
+        cached_data = cache.get(cache_key)
+
+        if cached_data:
+            return Response(cached_data)
+
+        interview = self.get_object()
+        serializer = self.get_serializer(interview)
+        data = serializer.data
+
+        cache.set(cache_key, data, timeout=300)
+        return Response(data)

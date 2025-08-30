@@ -17,6 +17,9 @@ export const loginUser = (data) => API.post('/login/', data);
 // Example: Get user profile (protected)
 export const getUserProfile = () => API.get('/profile/');
 
+export const logoutUser = () => API.post('logout/');
+
+
 // Create interview
 // export const createInterview = (data) => API.post('interviews/create/', data,{ withCredentials: true,});
 
@@ -31,13 +34,16 @@ export const createInterview = (data) => API.post('interviews/create/', data, {
 // Generate questions
 export const generateInterviewQuestions = (interviewId) => API.post(`interviews/${interviewId}/generate-questions/`);
 
-export const logoutUser = () => API.post('logout/');
 
 
 // Fetch all incomplete interviews for the logged-in user
 export const getIncompleteInterviews = () => 
   API.get('interviews/incomplete-interview/');
 
+// export const getIncompleteInterviews  =  async() =>{
+//   const res = await API.get(`interviews/incomplete-interview/`);
+//   return res.data;
+// }
 
 export const getAllInterviews = () => 
   API.get('interviews/all-interviews/');
@@ -57,3 +63,22 @@ export const getIncompleteInterviewById = (interviewId) =>
 
 export const deleteIncompleteInterviewById = (interviewId) =>
   API.delete(`interviews/incomplete-interview/${interviewId}/delete/`);
+
+
+// ✅ Fetch all completed interviews
+export const getCompletedInterviews = () => 
+  API.get('interviews/completed/');
+
+// ✅ Fetch single completed interview by ID
+export const getCompletedInterviewById = (interviewId) => 
+  API.get(`interviews/completed/${interviewId}/`);
+
+
+// Submit interview transcript and mark interview complete
+export const submitTranscriptAndComplete = (interviewId, transcriptText) =>
+  API.post(`vapi/submit-transcript/${interviewId}/`, { transcript_text: transcriptText }, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  });

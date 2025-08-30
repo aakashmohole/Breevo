@@ -1,6 +1,6 @@
 const InterviewDetailsModal = ({ interview, onClose, onStartCall }) => {
   if (!interview) return null;
-
+  console.log(interview)
   const getDifficultyColor = (difficulty) => {
     switch (difficulty.toLowerCase()) {
       case 'easy':
@@ -15,7 +15,8 @@ const InterviewDetailsModal = ({ interview, onClose, onStartCall }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+
       <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-md w-full text-white shadow-xl relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-purple-600 rounded-full filter blur-3xl opacity-20"></div>
@@ -102,7 +103,7 @@ const InterviewDetailsModal = ({ interview, onClose, onStartCall }) => {
               Go Back
             </button>
             <button
-              onClick={onStartCall}
+              onClick={() => onStartCall(interview.generated_questions)}
               className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-sm font-medium transition-all duration-200 shadow-md hover:shadow-purple-500/20"
             >
               Start Call
